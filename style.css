@@ -1,0 +1,39 @@
+*{
+  margin: 0;
+  padding: 0;
+}
+.images img{
+  max-width: 7rem;
+  padding: 0.5rem;
+  background-color: yellow;
+  aspect-ratio: 1;
+  margin: 0.5rem;
+  cursor: pointer;
+  border-radius: 0.5rem;
+}
+#container{
+
+  display: inline-block;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+h1 {
+  text-align: center;
+}
+
+#btn{
+  width: fit-content;
+  padding: 1rem 2rem;
+  margin-top: 0.5rem;
+  background-color: rgb(214, 72, 72);
+}
+#btn:hover{
+  background-color: blue;
+}
+.memory{
+  background-color: black;
+  border: 2px solid black;  
+}
+

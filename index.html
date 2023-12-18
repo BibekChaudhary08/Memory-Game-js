@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <h1>Bibek Puzzle Game</h1>
+    <div id="container">
+
+        <div class="memory">
+            <div class="images">
+                <img src="img/bootstrap.png">
+                <img src="img/html.png">
+                <img src="img/css.png">
+                <img src="img/js.png">
+            </div>
+
+            <div class="images">
+                <img src="img/bootstrap.png">
+                <img src="img/html.png">
+                <img src="img/css.png">
+                <img src="img/js.png">
+            </div>
+
+            <div class="images">
+                <img src="img/react.png">
+                <img src="img/react.png">
+                <img src="img/git.png">
+                <img src="img/git.png">
+            </div>
+        </div>   
+        
+      <button id="btn">Next Puzzle</button>
+      <audio id="audio" src="audio/song.mp3"></audio>
+    </div>
+
+    <script>
+        let btn = document.getElementById('btn');
+        let images = Array.from(document.querySelectorAll('.images img'));
+        let matchedImagesCount = 0;
+        let audio = document.getElementById('audio');
+
+        function shuffleArray(array) {
+          for (let i = array.length - 1; i > 0; i--) {
+            const j = Math.floor(Math.random() * (i + 1));
+            [array[i], array[j]] = [array[j], array[i]];
+          }
+        }
+
+        function resetGame() {
+          shuffleArray(images);
+
+          images.forEach((image, index) => {
+            let memory = document.querySelectorAll('.images')[Math.floor(index / 4)];
+            memory.appendChild(image);
+            image.style.background = "";
+          });
+
+          selectedImages = [];
+        }
+
+        btn.addEventListener("click", function () {
+          resetGame();
+        });
+
+        // For selecting two images
+        let selectedImages = [];
+        images.forEach((image) => {
+          image.addEventListener("click", function () {
+            if (selectedImages.includes(image)) {
+              selectedImages = selectedImages.filter((selectedImage) => selectedImage !== image);
+              image.style.background = "";
+            } else {
+              if (selectedImages.length < 2) {
+                selectedImages.push(image);
+                image.style.background = "red";
+              }
+            }
+
+            // Check if two images are selected
+            if (selectedImages.length === 2) {
+              setTimeout(checkSelectedImages, 100);
+            }
+          });
+        });
+
+        function checkSelectedImages() {
+          if (selectedImages[0].src === selectedImages[1].src) {
+            selectedImages.forEach((image) => {
+              image.style.background = "green";
+            })
+            alert("Congratulations! You have guessed correctly.");
+            // after selecting all the matching images
+            matchedImagesCount += 2;
+          if(matchedImagesCount === images.length){
+            audio.play();
+            setTimeout(gameOver, 500);
+          }
+          } 
+          else{
+            selectedImages.forEach((image) => {
+              image.style.background = "yellow";
+            })
+            alert("That's not the correct answer.");
+          }
+          
+          selectedImages = [ ];
+        }
+
+        function gameOver(){
+          alert("Bingo! You have matched all the images.");
+        }
+        
+        
+    </script>
+</body>
+</html>
